@@ -1,21 +1,20 @@
 <!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101827"><title>Arbeitszeitmonitor 1.2</title>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101827"><title>Arbeitszeitmonitor 1.3</title>
 <style>
 :root{font-family:system-ui,Arial,sans-serif;color:#eef4ff;background:#101827;color-scheme:dark}*{box-sizing:border-box}body{margin:0;padding:18px}main{max-width:560px;margin:auto}h1{font-size:1.55rem}h2{font-size:1.13rem;margin:0 0 12px}section{background:#1c293c;border-radius:14px;padding:16px;margin:13px 0}.muted,.small{color:#b5c3d5}.muted{font-size:.92rem}.small{font-size:.82rem}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{background:#273850;border-radius:10px;padding:12px}.metric strong{display:block;font-size:1.4rem;margin-top:5px;font-variant-numeric:tabular-nums}button,input,select{font:inherit}button{border:0;border-radius:9px;padding:12px;color:white;background:#3262a5;cursor:pointer}button:disabled{opacity:.35;cursor:not-allowed}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.green{background:#176b4a}.red{background:#9c3944}.secondary{background:#46566b}.danger{background:#8d3340}input,select{background:#101827;color:white;border:1px solid #7b8da4;border-radius:8px;padding:10px;max-width:100%}#weekly{width:115px}label{display:block;margin-bottom:8px}.entry{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid #40516a;padding:10px 0}.entry:last-child{border:0}.entry button{padding:8px 12px;flex-shrink:0}.entry-time{font-variant-numeric:tabular-nums}#notice{color:#f5d48a;min-height:1.1em}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #fff}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.formgrid label{font-size:.86rem}.formgrid input,.formgrid select{width:100%}.formactions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.hidden{display:none!important}.warning{color:#ffce83;font-weight:700}.planned{color:#c8b6ff}.timeparts{display:flex;gap:6px}.timeparts input{width:33%;min-width:0}.entry-info{min-width:0}.entry-info small{display:block;margin-top:3px;color:#c8b6ff}.entry-buttons{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}@media(max-width:360px){.metrics{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}}
-</style></head><body><main><h1>⏱ Arbeitszeitmonitor</h1><p class="muted">Persönlicher Rechner – Buchungen bleiben lokal in diesem Browser. Montag bis Freitag.</p>
+</style></head><body><main><h1>⏱ Arbeitszeitmonitor</h1><p class="muted">Persönlicher Rechner – Buchungen bleiben lokal in diesem Browser. Buchungen an allen Wochentagen möglich.</p>
 <section><label for="weekly">Wochenarbeitszeit (Stunden, z. B. 39 oder 37,5)</label><input id="weekly" inputmode="decimal" value="39"><button id="saveSettings">Speichern</button><p id="target" class="muted"></p></section>
-<section><div class="metrics"><div class="metric"><span class="muted">Arbeitszeit heute</span><strong id="worked">–</strong></div><div class="metric"><span class="muted">Noch nötig</span><strong id="remaining">–</strong></div><div class="metric"><span class="muted">Überstunden heute</span><strong id="overtime">–</strong></div><div class="metric"><span class="muted">nicht gutgeschriebene Zeit</span><strong id="excluded">–</strong></div></div><p>Voraussichtlicher Feierabend: <strong id="finish">–</strong></p><p class="small" id="status"></p><p id="limitWarning" class="warning" role="status"></p><p id="notice" role="status" class="small"></p></section>
+<section><div class="metrics"><div class="metric"><span class="muted">Arbeitszeit heute</span><strong id="worked">–</strong></div><div class="metric"><span class="muted">Noch nötig</span><strong id="remaining">–</strong></div><div class="metric"><span class="muted">Überstunden heute</span><strong id="overtime">–</strong></div><div class="metric"><span class="muted">Nicht angerechnete Mehrzeit</span><strong id="excluded">–</strong></div></div><p>Voraussichtlicher Feierabend: <strong id="finish">–</strong></p><p class="small" id="status"></p><p id="limitWarning" class="warning" role="status"></p><p id="notice" role="status" class="small"></p></section>
 <section><div class="actions"><button class="green" id="come">Kommen</button><button class="green" id="come8">Kommen +8 Min.</button><button class="red" id="go">Gehen</button><button class="red" id="go8">Gehen +8 Min.</button></div><p class="small">Die +8-Minuten-Buchungen sind für Wegezeit im Büro vorgesehen.</p></section>
 <section><h2>Heutige Buchungen</h2><div id="entries"></div><div class="formactions"><button id="add" class="secondary">+ Buchung nachtragen</button><button id="undo" class="secondary">Letzte Buchung rückgängig</button><button id="export" class="secondary">Daten exportieren</button></div><p class="small">Buchungen werden sekundengenau gespeichert. Geplante Buchungen zählen erst nach Bestätigung. Nur der aktuelle Tag wird geführt.</p></section>
 <section id="editor" class="hidden"><h2 id="editorTitle">Buchung bearbeiten</h2><div class="formgrid"><div><label for="editType">Buchungsart</label><select id="editType"><option value="come">Kommen</option><option value="go">Gehen</option></select></div><div><label for="editBonus">Wegezeit</label><select id="editBonus"><option value="0">Ohne Wegezeit</option><option value="8">+8 Minuten</option></select></div><div><label for="editHour">Uhrzeit (HH:MM:SS)</label><div class="timeparts"><input type="number" id="editHour" min="0" max="23" inputmode="numeric" aria-label="Stunden" placeholder="HH"><input type="number" id="editMinute" min="0" max="59" inputmode="numeric" aria-label="Minuten" placeholder="MM"><input type="number" id="editSecond" min="0" max="59" inputmode="numeric" aria-label="Sekunden" placeholder="SS"></div></div><div><label for="editPlanned">Buchungsstatus</label><select id="editPlanned"><option value="actual">Tatsächlich erfolgt</option><option value="planned">Geplant</option></select></div></div><p class="small">Buchungen müssen chronologisch aufeinanderfolgen und zwischen Kommen und Gehen wechseln.</p><div class="formactions"><button id="saveEdit" class="green">Buchung speichern</button><button id="cancelEdit" class="secondary">Abbrechen</button><button id="deleteEdit" class="danger">Buchung löschen</button></div></section>
-<section><p class="small">Testversion 1.2: Bei 15 bis unter 30 Minuten tatsächlicher Pause wird nach sechs Stunden reiner Arbeit vorläufig nur bis zu sechs Stunden Arbeit plus Wegezeit angerechnet. Diese Regel ist eine Hypothese aus einem Vergleichstag und noch nicht betrieblich bestätigt. Andere Pausenfälle verwenden weiterhin die bisherige Testregel.</p></section>
+<section><p class="small">Testversion 1.3: Bei 15 bis unter 30 Minuten tatsächlicher Pause wird nach sechs Stunden reiner Arbeit vorläufig nur bis zu sechs Stunden Arbeit plus Wegezeit angerechnet. Diese Regel ist eine Hypothese aus einem Vergleichstag und noch nicht betrieblich bestätigt. Andere Pausenfälle verwenden weiterhin die bisherige Testregel.</p></section>
 </main><script>
 'use strict';
 const KEY='worktime-v1';
 const $=id=>document.getElementById(id);
 const pad=n=>String(n).padStart(2,'0');
 const localDay=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-const isWeekday=d=>d.getDay()>=1&&d.getDay()<=5;
 const fmtSecs=seconds=>{const s=Math.max(0,Math.floor(seconds));return `${pad(Math.floor(s/3600))}:${pad(Math.floor(s%3600/60))}:${pad(s%60)}`};
 const clock=d=>`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 const dayBoundary=(day,h)=>new Date(`${day}T${pad(h)}:00:00`).getTime();
@@ -65,7 +64,7 @@ function calculate(entries,until){
 function actualEntries(){return state.entries.filter(e=>!planned(e))}
 function current(now){return calculate(actualEntries(),now.getTime())}
 function projection(now,actual){
- if(actual.active===null||!isWeekday(now))return '–';
+ if(actual.active===null)return '–';
  const target=Number(state.weekly)*60/5;
  if(actual.credit>=target)return 'Soll erreicht';
  const stop=dayBoundary(state.day,21);
@@ -85,13 +84,13 @@ function projection(now,actual){
 function render(){
  ensureDay();const now=new Date(),target=Number(state.weekly)*60/5,c=current(now);
  if(document.activeElement!==$('weekly'))$('weekly').value=String(state.weekly).replace('.',',');
- $('target').textContent='Tagesziel (Mo–Fr): '+fmtSecs(Math.round(target*60));
+ $('target').textContent='Tagesziel (alle Wochentage): '+fmtSecs(Math.round(target*60));
  $('worked').textContent=fmtSecs(c.credit*60);
  $('remaining').textContent=fmtSecs(Math.ceil(Math.max(0,target-c.credit)*60));
  $('overtime').textContent='+'+fmtSecs(Math.max(0,c.credit-target)*60);
  $('excluded').textContent=fmtSecs(c.excess*60);
  $('limitWarning').textContent=c.excess>0?'10-Stunden-Grenze überschritten – weitere Arbeitszeit wird nicht angerechnet.':c.work>=600?'10-Stunden-Grenze erreicht – weitere Arbeitszeit wird nicht angerechnet.':'';
- $('status').textContent=!isWeekday(now)?'Wochenende – keine Buchungen möglich':c.active!==null?'Status: Anwesend':'Status: Nicht anwesend';
+ $('status').textContent=c.active!==null?'Status: Anwesend':'Status: Nicht anwesend';
  $('finish').textContent=projection(now,c);
  const list=$('entries');list.replaceChildren();
  if(!state.entries.length){const p=document.createElement('p');p.className='muted';p.textContent='Noch keine Buchungen.';list.append(p)}
@@ -110,20 +109,20 @@ function render(){
   line.append(info,buttons);list.append(line);
  });
  // Schnellbuchungen dürfen nur in eine konsistente Folge tatsächlicher Buchungen eingefügt werden.
- const canBook=isWeekday(now)&&!state.entries.some(e=>msOf(e)>=now.getTime());
+ const canBook=!state.entries.some(e=>msOf(e)>=now.getTime());
  const nextType=state.entries.length%2===0?'come':'go';
  for(const id of ['come','come8'])$(id).disabled=!canBook||nextType!=='come';
  for(const id of ['go','go8'])$(id).disabled=!canBook||nextType!=='go';
- $('undo').disabled=!state.entries.length;$('add').disabled=!isWeekday(now);
+ $('undo').disabled=!state.entries.length;$('add').disabled=false;
 }
 function book(type,bonus){
- ensureDay();const now=new Date();if(!isWeekday(now))return;
+ ensureDay();const now=new Date();
  const next=[...state.entries,{type,bonus,at:now.toISOString(),planned:false}];
  const error=validate(next);if(error){$('notice').textContent=error;return}
  state.entries=next;persist();render();
 }
 function openEditor(index){
- ensureDay();if(!isWeekday(new Date()))return;
+ ensureDay();
  editing=index;
  const e=index===null?{type:state.entries.length%2===0?'come':'go',bonus:0,at:new Date().toISOString(),planned:false}:state.entries[index];
  const time=new Date(e.at);
@@ -136,7 +135,7 @@ function openEditor(index){
 }
 function closeEditor(){editing=null;$('editor').classList.add('hidden')}
 function saveEdit(){
- ensureDay();if(!isWeekday(new Date()))return;
+ ensureDay();
  const raw=[$('editHour').value.trim(),$('editMinute').value.trim(),$('editSecond').value.trim()];
  if(!raw.every((v,i)=>/^\d{1,2}$/.test(v)&&Number(v)<=[23,59,59][i])){$('notice').textContent='Bitte gültige Stunden, Minuten und Sekunden eingeben.';return}
  const [h,m,s]=raw.map(Number);const d=new Date();d.setHours(h,m,s,0);
