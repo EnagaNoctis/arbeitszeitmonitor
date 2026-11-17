@@ -2,7 +2,7 @@
 Ein kostenloser, browserbasierter Arbeitszeitrechner zur persönlichen Erfassung und Berechnung der täglichen Arbeitszeit.
 Die Anwendung ermöglicht es, Kommen- und Gehen-Zeiten sekundengenau zu erfassen und automatisch die verbleibende Arbeitszeit sowie den voraussichtlichen Feierabend zu berechnen.
 
-##Funktionen
+## Funktionen
 - Individuell einstellbare Wochenarbeitszeit
 - Automatische Berechnung des täglichen Arbeitszeitziels
 - Sekundengenaue Kommen- und Gehen-Buchungen
@@ -19,7 +19,7 @@ Die Anwendung ermöglicht es, Kommen- und Gehen-Zeiten sekundengenau zu erfassen
 - Lokale Datenspeicherung im Browser
 - JSON-Export zur Datensicherung
 
-##Verwendung
+## Verwendung
 
 - Die Anwendung wird direkt im Browser geöffnet. Eine Installation oder Registrierung ist nicht erforderlich.
 - Persönliche Wochenarbeitszeit eingeben und speichern.
@@ -29,13 +29,13 @@ Die Anwendung ermöglicht es, Kommen- und Gehen-Zeiten sekundengenau zu erfassen
 - Arbeitszeit, Restzeit und Überstunden ablesen.
 - Bei Bedarf können Buchungen nachträglich bearbeitet werden.
 
-##Datenschutz
+## Datenschutz
 
 Die erfassten Buchungen und Einstellungen werden lokal im Browser gespeichert.
 Es erfolgt keine Übertragung der Arbeitszeitdaten an einen Server. Die Anwendung benötigt kein Benutzerkonto.
 Beim Löschen der lokalen Browserdaten können gespeicherte Buchungen verloren gehen.
 
-##Technische Informationen
+## Technische Informationen
 
 - HTML
 - CSS
@@ -44,7 +44,7 @@ Beim Löschen der lokalen Browserdaten können gespeicherte Buchungen verloren g
 - Bereitstellung über GitHub Pages
 - Für Desktop und Smartphone geeignet
 
-##Hinweis
+## Hinweis
 
 Dieses Projekt dient ausschließlich der persönlichen Orientierung und ersetzt kein offizielles Zeiterfassungssystem.
 
